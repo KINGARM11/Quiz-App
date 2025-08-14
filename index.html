@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ APP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            border-bottom: 5px solid black;
+            padding-bottom: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            background-color: #529ae5;
+            margin: 100px auto 0;
+            padding: 10px;
+            width: 1000px;
+            border-radius: 10px;
+            height: 580px;
+
+        }
+
+        h2 {
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 10px;
+            width: 900px;
+            margin: 15px;
+            border-radius: 8px;
+            background-color: rgb(172, 168, 168);
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: left;
+            color: #000;
+
+        }
+
+        .btn:hover:not([disabled]) {
+            background-color: rgb(0, 0, 0);
+            cursor: pointer;
+            transition: all 0.34s;
+            color: white;
+        }
+        .btn:disabled{
+            cursor: no-drop;
+        }
+
+        #nxt {
+            text-align: center;
+            font-size: 20px;
+            width: 200px;
+            height: 50px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: rgb(175, 170, 170);
+            color: rgb(0, 0, 0);
+            margin: 20px auto 0;
+            display: block;
+            display: none;
+        }
+
+        #nxt:hover{
+            background-color: black;
+            color: white;
+        }
+        .correct{
+            background-color: greenyellow;
+            color: black;
+        }
+        .incorrect{
+            background-color: rgba(234, 0, 0, 0.71);
+            color: black;
+        }
+        #question{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>G.K QUIZ</h1>
+        <div class="quiz">
+            <br>
+            <h2 id="question">Question goes Here</h2> <br>
+            <div id="answer">
+                <button class="btn">Answer 1</button> <br>
+                <button class="btn">Answer 2</button> <br>
+                <button class="btn">Answer 3</button> <br>
+                <button class="btn">Answer 4</button>
+            </div>
+            <div><button id="nxt">Next</button></div>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "Which is the largest State in India (Area wise)?",
+                answers: [
+                    { text: "Uttar Pradesh", correct: false },
+                    { text: "Maharastra ", correct: false },
+                    { text: "Rajasthan", correct: true },
+                    { text: "Madhya Pradesh", correct: false },
+                ]
+            },
+            {
+                question: "Which is the largest city in India?",
+                answers: [
+                    { text: "Mumbai", correct: false },
+                    { text: "Delhi", correct: true },
+                    { text: "Bengaluru", correct: false },
+                    { text: "Hyderabad", correct: false },
+                ]
+            },
+            {
+                question: "Who is known as Father of Indian Constitution?",
+                answers: [
+                    { text: "Mahatma Gandhi", correct: false },
+                    { text: "Jawahar Lal Nehru", correct: false },
+                    { text: "Dr. Rajendra Prasad", correct: false },
+                    { text: "Dr. B. R. Ambedkar", correct: true },
+                ]
+            },
+            {
+                question: "Gir National Park in Gujarat is famous for?",
+                answers: [
+                    { text: "Tiger", correct: false},
+                    { text: "Leopard", correct: false },
+                    { text: "Lion", correct: true },
+                    { text: "Jaguar", correct:false},
+                ]
+            },
+            {
+                question: "Who wrote Romeo and Juliet?",
+                answers: [
+                    { text: "J.K.Rowling", correct: false},
+                    { text: "William WordsWorth", correct: false },
+                    { text: "Kiran Desai", correct: false },
+                    { text: "William Shakespeare", correct:true},
+                ]
+            },
+            {
+                question: "Which organ purify our blood?",
+                answers: [
+                    { text: "Liver", correct: false},
+                    { text: "Lungs", correct: false },
+                    { text: "Heart", correct: false },
+                    { text: "Kidney", correct:true},
+                ]
+            },
+            {
+                question: "What crop is famously grown in the region of Darjeeling?",
+                answers: [
+                    { text: "Coffee", correct: false},
+                    { text: "Tea", correct: true},
+                    { text: "Almond", correct: false },
+                    { text: "Cashew", correct:false},
+                ]
+            },
+            {
+                question: "Name the country which has no capital?",
+                answers: [
+                    { text: "Nauru", correct: true},
+                    { text: "Tuvalu", correct: false },
+                    { text: "Palau", correct: false },
+                    { text: "Australia", correct:false},
+                ]
+            },
+            {
+                question: "Which name is not the another name of Ganga?",
+                answers: [
+                    { text: "Ghaghra", correct: true},
+                    { text: "Alaknanda", correct: false },
+                    { text: "Bhagirathi", correct: false },
+                    { text: "Jahnavi", correct:false},
+                ]
+            },
+            {
+                
+                question: "Name the gas which is filled in balloons?",
+                answers: [
+                    { text: "Nitrogen", correct: false},
+                    { text: "Hydrogen", correct: false },
+                    { text: "Helium", correct: true },
+                    { text: "Oxygen", correct:false},
+                ]
+            },
+        ];
+        const questionElement = document.getElementById("question");
+        const answerButtons = document.getElementById("answer");
+        const nextButton = document.getElementById("nxt");
+        let currentQuestionindex = 0;
+        let score = 0;
+
+        function startQuiz() {
+            currentQuestionindex = 0;
+            score = 0;
+            nextButton.innerHTML = "Next";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionindex];
+            let questionNo = currentQuestionindex + 1;
+            questionElement.innerHTML = questionNo + " . " + currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                answerButtons.appendChild(button);
+                if(answer.correct)
+                {
+                    button.dataset.correct=answer.correct;
+                }
+                button.addEventListener("click",selectanswer);
+            });
+        }
+        function resetState() {
+            nextButton.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+        function selectanswer(e){
+            const selectedbtn=e.target;
+            const iscorrect=selectedbtn.dataset.correct ==="true";
+            if(iscorrect){
+                selectedbtn.classList.add("correct");
+                score++;
+            }
+            else{
+                selectedbtn.classList.add("incorrect");
+            }
+            Array.from(answerButtons.children).forEach(button=>{
+                if(button.dataset.correct==="true")
+                {
+                    button.classList.add("correct");
+                }
+                button.disabled=true;
+            });
+            nextButton.style.display="block";
+        }
+        function showscore()
+        {
+            resetState();
+            if(score==0)
+            {
+                questionElement.innerHTML=`You Scored ${score} out of ${questions.length} ! <br/> <br/> Very Bad Prformance , YOU FAILED !!`;
+            }
+            if(score<=5)
+            {
+                questionElement.innerHTML=`You Scored ${score} out of ${questions.length} ! <br/> <br/> Bad Performance ,   Need More Learning ,  YOU FAILED !!`;
+            }
+            if(score>5 && score <8)
+            {
+                questionElement.innerHTML=`You Scored ${score} out of ${questions.length} ! <br/> <br/> Keep it up !! , YOU PASSED`;
+            }
+            if(score>=8 && score<10)
+            {
+                questionElement.innerHTML=`You Scored ${score} out of ${questions.length} ! <br/> <br/> Good !! ,YOU PASSED`;
+            }
+            if(score==10)
+            {
+                questionElement.innerHTML=`You Scored ${score} out of ${questions.length} ! <br/> <br/> WELDONE !! , YOU PASSED`;
+            }
+            nextButton.innerHTML="Play Again";
+            nextButton.style.display="block";
+        }
+        function handleNext(){
+            currentQuestionindex++;
+            if(currentQuestionindex < questions.length)
+            {
+                showQuestion();
+            }
+            else{
+                showscore();
+            }
+        }
+        nextButton.addEventListener("click",()=>{
+            if(currentQuestionindex < questions.length){
+                handleNext();
+            }
+            else{
+                startQuiz();
+            }
+        })
+        startQuiz();
+        
+    </script>
+</body>
+
+</html>
